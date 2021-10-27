@@ -24,6 +24,7 @@ import org.apache.shardingsphere.db.protocol.mysql.payload.MySQLPacketPayload;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -63,12 +64,15 @@ public final class MySQLTextResultSetRowPacket implements MySQLPacket {
                 } else if ((each instanceof Timestamp) && (0 == ((Timestamp) each).getNanos())) {
                     payload.writeStringLenenc(each.toString().split("\\.")[0]);
                 } else if (each instanceof BigDecimal) {
-                    payload.writeStringLenenc(((BigDecimal) each).toPlainString());
+                    payload.writeStringLenenc(((BigDecimal) each).stripTrailingZeros().toPlainString());
+                } else if (each instanceof Float || each instanceof Double) {
+                    payload.writeStringLenenc(new BigDecimal(each.toString()).stripTrailingZeros().toPlainString());
                 } else if (each instanceof Boolean) {
                     payload.writeBytesLenenc((Boolean) each ? new byte[]{1} : new byte[]{0});
                 } else if (each instanceof LocalDateTime) {
-                    payload.writeStringLenenc(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.parse(each.toString(),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))));
+                    String time = each.toString();
+                    payload.writeStringLenenc(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.parse(time,
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss".substring(0, time.length() + 2)))));
                 } else {
                     payload.writeStringLenenc(each.toString());
                 }

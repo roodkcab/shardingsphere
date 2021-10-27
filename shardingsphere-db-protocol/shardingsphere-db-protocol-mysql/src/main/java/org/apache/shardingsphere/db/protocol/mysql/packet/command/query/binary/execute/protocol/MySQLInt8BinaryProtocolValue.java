@@ -20,6 +20,7 @@ package org.apache.shardingsphere.db.protocol.mysql.packet.command.query.binary.
 import org.apache.shardingsphere.db.protocol.mysql.payload.MySQLPacketPayload;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * Binary protocol value for int8 for MySQL.
@@ -33,7 +34,9 @@ public final class MySQLInt8BinaryProtocolValue implements MySQLBinaryProtocolVa
     
     @Override
     public void write(final MySQLPacketPayload payload, final Object value) {
-        if (value instanceof BigDecimal) {
+        if (value instanceof BigInteger) {
+            payload.writeInt8(((BigInteger) value).longValue());
+        } else if (value instanceof BigDecimal) {
             payload.writeInt8(((BigDecimal) value).longValue());
         } else if (value instanceof Integer) {
             payload.writeInt8(((Integer) value).longValue());

@@ -51,7 +51,7 @@ public final class MySQLPrivilegeHandler implements StoragePrivilegeHandler {
     
     private static final String SCHEMA_PRIVILEGE_SQL = "SELECT * FROM mysql.db WHERE (user, host) in (%s)";
     
-    private static final String TABLE_PRIVILEGE_SQL = "SELECT Db, Table_name, Table_priv FROM mysql.tables_priv WHERE (user, host) in (%s)";
+    private static final String TABLE_PRIVILEGE_SQL = "SELECT Db, Table_name, Table_priv, user, host FROM mysql.tables_priv WHERE (user, host) in (%s)";
     
     @Override
     public Collection<ShardingSphereUser> diff(final Collection<ShardingSphereUser> users, final DataSource dataSource) throws SQLException {

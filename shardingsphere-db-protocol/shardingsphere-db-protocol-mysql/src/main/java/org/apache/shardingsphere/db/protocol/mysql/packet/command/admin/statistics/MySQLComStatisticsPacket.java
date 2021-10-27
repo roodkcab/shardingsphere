@@ -15,30 +15,24 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.db.protocol.mysql.packet.command.query.binary.execute.protocol;
+package org.apache.shardingsphere.db.protocol.mysql.packet.command.admin.statistics;
 
+import lombok.Getter;
+import lombok.ToString;
+import org.apache.shardingsphere.db.protocol.mysql.packet.command.MySQLCommandPacket;
+import org.apache.shardingsphere.db.protocol.mysql.packet.command.MySQLCommandPacketType;
 import org.apache.shardingsphere.db.protocol.mysql.payload.MySQLPacketPayload;
 
-import java.math.BigDecimal;
-
 /**
- * Binary protocol value for int4 for MySQL.
+ * COM_STATISTICS command packet for MySQL.
+ * 
+ * @see <a href="https://dev.mysql.com/doc/internals/en/com-statistics.html">COM_STATISTICS</a>
  */
-public final class MySQLInt4BinaryProtocolValue implements MySQLBinaryProtocolValue {
-    
-    @Override
-    public Object read(final MySQLPacketPayload payload) {
-        return payload.readInt4();
+public final class MySQLComStatisticsPacket extends MySQLCommandPacket {
+
+    public MySQLComStatisticsPacket() {
+        super(MySQLCommandPacketType.COM_STATISTICS);
     }
-    
-    @Override
-    public void write(final MySQLPacketPayload payload, final Object value) {
-        if (value instanceof BigDecimal) {
-            payload.writeInt4(((BigDecimal) value).intValue());
-        } else if (value instanceof Long) {
-            payload.writeInt4(((Long) value).intValue());
-        } else {
-            payload.writeInt4((Integer) value);
-        }
-    }
+
 }
+

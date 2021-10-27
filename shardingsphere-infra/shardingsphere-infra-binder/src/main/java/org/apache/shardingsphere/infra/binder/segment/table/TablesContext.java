@@ -17,7 +17,7 @@
 
 package org.apache.shardingsphere.infra.binder.segment.table;
 
-import com.google.common.base.Preconditions;
+//import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.shardingsphere.infra.binder.segment.select.projection.impl.ColumnProjection;
@@ -175,7 +175,7 @@ public final class TablesContext {
      * @return schema name
      */
     public Optional<String> getSchemaName() {
-        Preconditions.checkState(schemaNames.size() <= 1, "Can not support multiple different schema.");
+        //Preconditions.checkState(schemaNames.size() <= 1, "Can not support multiple different schema.");
         return schemaNames.stream().findFirst();
     }
 }
