@@ -36,11 +36,22 @@ public final class TransactionStatus {
     private volatile boolean inTransaction;
     
     private volatile TransactionType transactionType;
+
+    @Setter
+    private volatile boolean manualXA;
     
     public TransactionStatus(final TransactionType initialTransactionType) {
         transactionType = initialTransactionType;
     }
-    
+
+    public TransactionType getTransactionType() {
+        return manualXA ? TransactionType.MANUALXA : transactionType;
+    }
+
+    public boolean isInTransaction() {
+        return inTransaction || manualXA;
+    }
+
     /**
      * Change transaction type of current channel.
      *
@@ -59,6 +70,6 @@ public final class TransactionStatus {
      * @return is in connection held transaction or not
      */
     public boolean isInConnectionHeldTransaction() {
-        return inTransaction && TransactionType.BASE != transactionType;
+        return isInTransaction() && TransactionType.BASE != getTransactionType();
     }
 }
