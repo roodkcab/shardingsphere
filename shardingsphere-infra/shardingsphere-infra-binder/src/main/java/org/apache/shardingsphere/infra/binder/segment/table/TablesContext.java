@@ -206,7 +206,7 @@ public final class TablesContext {
      * @return schema name
      */
     public Optional<String> getSchemaName() {
-        Preconditions.checkState(schemaNames.size() <= 1, "Can not support multiple different schema.");
+        //Preconditions.checkState(schemaNames.size() <= 1, "Can not support multiple different schema.");
         for (String each : schemaNames) {
             return Optional.of(each);
         }
