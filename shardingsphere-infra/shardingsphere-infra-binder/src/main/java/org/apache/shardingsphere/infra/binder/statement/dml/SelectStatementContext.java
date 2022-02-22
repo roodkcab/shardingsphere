@@ -95,7 +95,7 @@ public final class SelectStatementContext extends CommonSQLStatementContext<Sele
     public SelectStatementContext(final Map<String, ShardingSphereMetaData> metaDataMap, final List<Object> parameters, final SelectStatement sqlStatement, final String defaultSchemaName) {
         super(sqlStatement);
         subqueryContexts = createSubqueryContexts(metaDataMap, parameters, defaultSchemaName);
-        tablesContext = new TablesContext(getAllTableSegments(), subqueryContexts);
+        tablesContext = new TablesContext(getAllTableSegments(), subqueryContexts, Optional.of(defaultSchemaName));
         ShardingSphereSchema schema = getSchema(metaDataMap, defaultSchemaName);
         groupByContext = new GroupByContextEngine().createGroupByContext(sqlStatement);
         orderByContext = new OrderByContextEngine().createOrderBy(sqlStatement, groupByContext);

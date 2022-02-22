@@ -62,10 +62,10 @@ public final class TablesContext {
     }
     
     public TablesContext(final Collection<SimpleTableSegment> tableSegments) {
-        this(tableSegments, Collections.emptyMap());
+        this(tableSegments, Collections.emptyMap(), Optional.empty());
     }
     
-    public TablesContext(final Collection<? extends TableSegment> tableSegments, final Map<Integer, SelectStatementContext> subqueryContexts) {
+    public TablesContext(final Collection<? extends TableSegment> tableSegments, final Map<Integer, SelectStatementContext> subqueryContexts, final Optional<String> defaultSchema) {
         if (tableSegments.isEmpty()) {
             return;
         }
@@ -92,6 +92,9 @@ public final class TablesContext {
                 }
             }
             subqueryTables.putAll(result);
+        }
+        if (defaultSchema.isPresent()) {
+            schemaNames.add(defaultSchema.get());
         }
     }
     
