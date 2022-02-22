@@ -15,32 +15,22 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.db.protocol.mysql.packet.command;
+package org.apache.shardingsphere.proxy.frontend.mysql.command.admin.sleep;
 
-import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.db.protocol.mysql.packet.MySQLPacket;
-import org.apache.shardingsphere.db.protocol.mysql.payload.MySQLPacketPayload;
-import org.apache.shardingsphere.db.protocol.packet.CommandPacket;
+import org.apache.shardingsphere.db.protocol.mysql.packet.generic.MySQLOKPacket;
+import org.apache.shardingsphere.db.protocol.packet.DatabasePacket;
+import org.apache.shardingsphere.proxy.frontend.command.executor.CommandExecutor;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
- * Command packet for MySQL.
+ * COM_SLEEP executor for MySQL.
  */
-@RequiredArgsConstructor
-public abstract class MySQLCommandPacket implements MySQLPacket, CommandPacket {
-    
-    private final MySQLCommandPacketType type;
+public final class MySQLComSleepExecutor implements CommandExecutor {
     
     @Override
-    public void write(final MySQLPacketPayload payload) {
-        payload.writeInt1(type.getValue());
-        doWrite(payload);
-    }
-    
-    protected void doWrite(final MySQLPacketPayload payload) {
-    }
-    
-    @Override
-    public int getSequenceId() {
-        return 0;
+    public Collection<DatabasePacket<?>> execute() {
+        return Collections.singletonList(new MySQLOKPacket(1));
     }
 }

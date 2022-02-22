@@ -19,6 +19,7 @@ package org.apache.shardingsphere.db.protocol.mysql.packet.command.admin.statist
 
 import org.apache.shardingsphere.db.protocol.mysql.packet.command.MySQLCommandPacket;
 import org.apache.shardingsphere.db.protocol.mysql.packet.command.MySQLCommandPacketType;
+import org.apache.shardingsphere.db.protocol.mysql.payload.MySQLPacketPayload;
 
 /**
  * COM_STATISTICS command packet for MySQL.
@@ -26,9 +27,18 @@ import org.apache.shardingsphere.db.protocol.mysql.packet.command.MySQLCommandPa
  * @see <a href="https://dev.mysql.com/doc/internals/en/com-statistics.html">COM_STATISTICS</a>
  */
 public final class MySQLComStatisticsPacket extends MySQLCommandPacket {
-
+    
     public MySQLComStatisticsPacket() {
         super(MySQLCommandPacketType.COM_STATISTICS);
     }
 
+    @Override
+    public void write(MySQLPacketPayload payload) {
+        payload.writeStringEOF("");
+    }
+
+    @Override
+    public int getSequenceId() {
+        return 1;
+    }
 }
