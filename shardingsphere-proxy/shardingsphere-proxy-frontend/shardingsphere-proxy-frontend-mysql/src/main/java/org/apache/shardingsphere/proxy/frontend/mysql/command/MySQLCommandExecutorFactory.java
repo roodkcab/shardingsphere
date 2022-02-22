@@ -34,6 +34,8 @@ import org.apache.shardingsphere.proxy.frontend.command.executor.CommandExecutor
 import org.apache.shardingsphere.proxy.frontend.mysql.command.admin.initdb.MySQLComInitDbExecutor;
 import org.apache.shardingsphere.proxy.frontend.mysql.command.admin.ping.MySQLComPingExecutor;
 import org.apache.shardingsphere.proxy.frontend.mysql.command.admin.quit.MySQLComQuitExecutor;
+import org.apache.shardingsphere.proxy.frontend.mysql.command.admin.sleep.MySQLComSleepExecutor;
+import org.apache.shardingsphere.proxy.frontend.mysql.command.admin.statistics.MySQLComStatisticsExecutor;
 import org.apache.shardingsphere.proxy.frontend.mysql.command.generic.MySQLUnsupportedCommandExecutor;
 import org.apache.shardingsphere.proxy.frontend.mysql.command.query.binary.close.MySQLComStmtCloseExecutor;
 import org.apache.shardingsphere.proxy.frontend.mysql.command.query.binary.execute.MySQLComStmtExecuteExecutor;
@@ -81,6 +83,10 @@ public final class MySQLCommandExecutorFactory {
                 return new MySQLComStmtResetExecutor((MySQLComStmtResetPacket) commandPacket);
             case COM_STMT_CLOSE:
                 return new MySQLComStmtCloseExecutor((MySQLComStmtClosePacket) commandPacket, connectionSession.getConnectionId());
+            case COM_SLEEP:
+                return new MySQLComSleepExecutor();
+            case COM_STATISTICS:
+                return new MySQLComStatisticsExecutor();
             default:
                 return new MySQLUnsupportedCommandExecutor(commandPacketType);
         }
