@@ -67,10 +67,10 @@ public final class TablesContext {
     }
     
     public TablesContext(final Collection<SimpleTableSegment> tableSegments, final DatabaseType databaseType) {
-        this(tableSegments, Collections.emptyMap(), databaseType);
+        this(tableSegments, Collections.emptyMap(), Optional.empty(), databaseType);
     }
     
-    public TablesContext(final Collection<? extends TableSegment> tableSegments, final Map<Integer, SelectStatementContext> subqueryContexts, final DatabaseType databaseType) {
+    public TablesContext(final Collection<? extends TableSegment> tableSegments, final Map<Integer, SelectStatementContext> subqueryContexts, final Optional<String> defaultSchema, final DatabaseType databaseType) {
         if (tableSegments.isEmpty()) {
             return;
         }
@@ -85,6 +85,9 @@ public final class TablesContext {
             if (each instanceof SubqueryTableSegment) {
                 subqueryTables.putAll(createSubqueryTables(subqueryContexts, (SubqueryTableSegment) each));
             }
+        }
+        if (defaultSchema.isPresent()) {
+            schemaNames.add(defaultSchema.get());
         }
     }
     

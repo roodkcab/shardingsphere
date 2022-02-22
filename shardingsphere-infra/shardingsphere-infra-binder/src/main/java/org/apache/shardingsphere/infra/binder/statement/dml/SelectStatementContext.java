@@ -107,7 +107,7 @@ public final class SelectStatementContext extends CommonSQLStatementContext<Sele
         extractWhereSegments(whereSegments, sqlStatement);
         ColumnExtractor.extractColumnSegments(columnSegments, whereSegments);
         subqueryContexts = createSubqueryContexts(metaDataMap, parameters, defaultDatabaseName);
-        tablesContext = new TablesContext(getAllTableSegments(), subqueryContexts, getDatabaseType());
+        tablesContext = new TablesContext(getAllTableSegments(), subqueryContexts, Optional.of(defaultDatabaseName), getDatabaseType());
         ShardingSphereSchema schema = getSchema(metaDataMap, defaultDatabaseName);
         groupByContext = new GroupByContextEngine().createGroupByContext(sqlStatement);
         orderByContext = new OrderByContextEngine().createOrderBy(sqlStatement, groupByContext);
