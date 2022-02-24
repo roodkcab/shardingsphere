@@ -151,7 +151,7 @@ public abstract class DatabaseCommunicationEngine<T> {
     }
     
     private boolean hasSelectExpandProjections(final SQLStatementContext<?> sqlStatementContext) {
-        return false;
+        return false;//can only be used with client prepare
         //return sqlStatementContext instanceof SelectStatementContext && !((SelectStatementContext) sqlStatementContext).getProjectionsContext().getExpandProjections().isEmpty();
     }
     
