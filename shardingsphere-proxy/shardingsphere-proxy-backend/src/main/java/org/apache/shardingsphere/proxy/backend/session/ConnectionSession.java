@@ -115,7 +115,8 @@ public final class ConnectionSession {
      * @return schema name
      */
     public String getSchemaName() {
-        return null == SQLStatementSchemaHolder.get() ? schemaName : SQLStatementSchemaHolder.get();
+        return schemaName;
+        //return null == SQLStatementSchemaHolder.get() ? schemaName : SQLStatementSchemaHolder.get();
     }
     
     /**

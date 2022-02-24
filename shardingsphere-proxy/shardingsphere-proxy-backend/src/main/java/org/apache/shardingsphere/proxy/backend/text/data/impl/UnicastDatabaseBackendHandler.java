@@ -52,7 +52,7 @@ public final class UnicastDatabaseBackendHandler implements DatabaseBackendHandl
     
     @Override
     public Future<ResponseHeader> executeFuture() {
-        String originSchema = connectionSession.getSchemaName();
+        String originSchema = connectionSession.getDefaultSchemaName();
         String schemaName = null == originSchema ? getFirstSchemaName() : originSchema;
         if (!ProxyContext.getInstance().getMetaData(schemaName).hasDataSource()) {
             throw new RuleNotExistedException();
