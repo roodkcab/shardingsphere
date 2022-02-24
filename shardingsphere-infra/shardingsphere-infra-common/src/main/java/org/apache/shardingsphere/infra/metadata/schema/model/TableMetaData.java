@@ -63,11 +63,11 @@ public final class TableMetaData {
     private Map<String, ColumnMetaData> getColumns(final Collection<ColumnMetaData> columnMetaDataList) {
         Map<String, ColumnMetaData> result = new LinkedHashMap<>(columnMetaDataList.size(), 1);
         for (ColumnMetaData each : columnMetaDataList) {
-            String lowerColumnName = each.getName().toLowerCase();
-            result.put(lowerColumnName, each);
-            columnNames.add(each.getName());
+            String columnName = each.getName();
+            columnNames.add(columnName);
+            result.put(columnName, each);
             if (each.isPrimaryKey()) {
-                primaryKeyColumns.add(lowerColumnName);
+                primaryKeyColumns.add(columnName);
             }
         }
         return result;
@@ -76,7 +76,7 @@ public final class TableMetaData {
     private Map<String, IndexMetaData> getIndexes(final Collection<IndexMetaData> indexMetaDataList) {
         Map<String, IndexMetaData> result = new LinkedHashMap<>(indexMetaDataList.size(), 1);
         for (IndexMetaData each : indexMetaDataList) {
-            result.put(each.getName().toLowerCase(), each);
+            result.put(each.getName(), each);
         }
         return result;
     }
