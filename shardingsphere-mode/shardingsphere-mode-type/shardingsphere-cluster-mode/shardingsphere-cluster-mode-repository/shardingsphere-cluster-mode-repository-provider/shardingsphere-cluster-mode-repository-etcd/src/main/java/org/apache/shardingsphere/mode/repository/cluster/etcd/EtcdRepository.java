@@ -68,6 +68,8 @@ public final class EtcdRepository implements ClusterPersistRepository {
         etcdProperties = new EtcdProperties(props);
         client = Client.builder().endpoints(Util.toURIs(Splitter.on(",").trimResults().splitToList(config.getServerLists())))
                 .namespace(ByteSequence.from(config.getNamespace(), StandardCharsets.UTF_8))
+                .user(ByteSequence.from(config.getProps().getOrDefault("user", "").toString(), StandardCharsets.UTF_8))
+                .password(ByteSequence.from(config.getProps().getOrDefault("password", "").toString(), StandardCharsets.UTF_8))
                 .maxInboundMessageSize((int) 32e9)
                 .build();
     }
