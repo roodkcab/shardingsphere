@@ -39,7 +39,7 @@ public final class ExpectedExceptions {
     static {
         EXCEPTIONS.add(ShardingSphereException.class);
         EXCEPTIONS.add(ShardingSphereConfigurationException.class);
-        EXCEPTIONS.add(SQLParsingException.class);
+        //EXCEPTIONS.add(SQLParsingException.class);
         EXCEPTIONS.add(CommonDistSQLException.class);
         EXCEPTIONS.add(BackendException.class);
         EXCEPTIONS.add(UnsupportedPreparedStatementException.class);

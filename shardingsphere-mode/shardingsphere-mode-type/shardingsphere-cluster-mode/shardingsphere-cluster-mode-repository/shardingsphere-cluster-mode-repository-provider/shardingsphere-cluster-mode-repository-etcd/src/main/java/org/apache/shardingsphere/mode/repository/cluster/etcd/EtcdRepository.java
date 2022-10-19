@@ -20,6 +20,7 @@ package org.apache.shardingsphere.mode.repository.cluster.etcd;
 import com.google.common.base.Splitter;
 import io.etcd.jetcd.ByteSequence;
 import io.etcd.jetcd.Client;
+import io.etcd.jetcd.ClientBuilder;
 import io.etcd.jetcd.KeyValue;
 import io.etcd.jetcd.Observers;
 import io.etcd.jetcd.Util;
@@ -65,12 +66,15 @@ public final class EtcdRepository implements ClusterPersistRepository {
     @Override
     public void init(final ClusterPersistRepositoryConfiguration config) {
         etcdProperties = new EtcdProperties(props);
-        client = Client.builder().endpoints(Util.toURIs(Splitter.on(",").trimResults().splitToList(config.getServerLists())))
+        ClientBuilder builder = Client.builder().endpoints(Util.toURIs(Splitter.on(",").trimResults().splitToList(config.getServerLists())))
                 .namespace(ByteSequence.from(config.getNamespace(), StandardCharsets.UTF_8))
-                .user(ByteSequence.from(config.getProps().getOrDefault("user", "").toString(), StandardCharsets.UTF_8))
-                .password(ByteSequence.from(config.getProps().getOrDefault("password", "").toString(), StandardCharsets.UTF_8))
-                .maxInboundMessageSize((int) 32e9)
-                .build();
+                .maxInboundMessageSize((int) 32e9);
+        String user = config.getProps().getOrDefault("user", "").toString();
+        String password = config.getProps().getOrDefault("password", "").toString();
+        if (!user.isEmpty() && !password.isEmpty()) {
+            builder.user(ByteSequence.from(user, StandardCharsets.UTF_8)).password(ByteSequence.from(password, StandardCharsets.UTF_8));
+        }
+        client = builder.build();
     }
     
     @SneakyThrows({InterruptedException.class, ExecutionException.class})
